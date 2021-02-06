@@ -1,6 +1,17 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { hot } from "react-hot-loader";
+import React from "react";
+import { MiniSidebar } from "./components/common";
 
-const App = () => <h2>hello from React!</h2>;
+import { WelcomePage } from "./components/pages";
+import { AppWrapper, ContentWrapper } from "./App.theme";
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+const App = () => (
+  <AppWrapper>
+    <ContentWrapper>
+      <MiniSidebar />
+      <WelcomePage />
+    </ContentWrapper>
+  </AppWrapper>
+);
+
+export default hot(module)(App);

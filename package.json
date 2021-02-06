@@ -51,7 +51,7 @@
               "config": "./webpack.renderer.config.js",
               "entryPoints": [
                 {
-                  "html": "./src/index.html",
+                  "html": "./src/renderer/index.html",
                   "js": "./src/renderer/index.js",
                   "name": "main_window"
                 }
@@ -81,6 +81,9 @@
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-hot-loader": "^4.13.0",
+    "spectre.css": "^0.5.9",
+    "styled-components": "^5.2.1"
   }
 }

@@ -26,9 +26,19 @@
  * ```
  */
 
-import "../css/index.css";
-import "./App";
+import "react-hot-loader";
+import React from "react";
+import ReactDOM from "react-dom";
+import { ThemeProvider } from "styled-components";
+import { darkTheme } from "./theme/theme";
+import { GlobalStyles } from "./theme/global";
+import App from "./App";
+import "spectre.css";
 
-console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack'
+ReactDOM.render(
+  <ThemeProvider theme={darkTheme}>
+    <GlobalStyles />
+    <App />
+  </ThemeProvider>,
+  document.querySelector("#root")
 );
