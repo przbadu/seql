@@ -1,15 +1,15 @@
 import { hot } from "react-hot-loader";
 import React from "react";
-import { MiniSidebar } from "./components/common";
 
-import { WelcomePage } from "./components/pages";
+import AppWelcome from "./components/AppWelcome";
 import { AppWrapper, ContentWrapper } from "./App.theme";
+import WorkspaceMiniSidebar from "./components/WorkspaceMiniSidebar";
 
 const App = () => (
   <AppWrapper>
     <ContentWrapper>
-      <MiniSidebar />
-      <WelcomePage />
+      <WorkspaceMiniSidebar />
+      <AppWelcome />
     </ContentWrapper>
   </AppWrapper>
 );
