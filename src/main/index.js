@@ -31,7 +31,6 @@ const createWindow = async () => {
       enableRemoteModule: true,
       spellcheck: false,
     },
-    backgroundColor: "#24292E",
   });
 
   // and load the index.html of the app.

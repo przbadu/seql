@@ -1,25 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+
+import { WelcomeWrapper, Spacing, Button } from "./WelcomePage.styled";
 import { TextField } from "../../common";
 import Modal from "../../common/Modal/Modal";
-
-const WelcomeWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-`;
-
-const Spacing = styled.div`
-  margin-bottom: 10px;
-`;
-
-const Button = styled.button`
-  margin-right: 10px;
-`;
 
 const formState = {
   name: "",
@@ -39,8 +22,10 @@ const WelcomePage = () => {
     setOpen((prev) => !prev);
   };
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
+    console.log(e.target);
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   console.log(form);
   return (
@@ -62,10 +47,10 @@ const WelcomePage = () => {
           <div className="modal-body">
             <div className="content">
               <TextField
-                name="name"
-                placeholder="Name"
                 value={form.name}
                 onChange={handleChange}
+                placeholder="Name"
+                name="name"
               />
             </div>
           </div>

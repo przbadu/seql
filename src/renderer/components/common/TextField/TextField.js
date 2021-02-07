@@ -37,6 +37,7 @@ const TextField = ({
         className="form-input"
         value={value}
         onChange={onChange}
+        name={name}
         {...rest}
       />
     </div>

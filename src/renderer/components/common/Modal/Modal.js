@@ -2,7 +2,7 @@ import React from "react";
 
 const Modal = ({ open, handleClose, title, children }) => {
   return (
-    <div className={`modal ${open ? "active" : ""}`} id="modal-id">
+    <div className={`modal modal-sm ${open ? "active" : ""}`} id="modal-id">
       <a
         href="#close"
         className="modal-overlay"

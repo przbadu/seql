@@ -28,17 +28,22 @@
 
 import "react-hot-loader";
 import React from "react";
+import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "styled-components";
-import { darkTheme } from "./theme/theme";
-import { GlobalStyles } from "./theme/global";
-import App from "./App";
 import "spectre.css";
 
+import store from "./store";
+import { lightTheme } from "./theme/theme";
+import { GlobalStyles } from "./theme/global";
+import App from "./App";
+
 ReactDOM.render(
-  <ThemeProvider theme={darkTheme}>
-    <GlobalStyles />
-    <App />
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyles />
+      <App />
+    </ThemeProvider>
+  </Provider>,
   document.querySelector("#root")
 );
