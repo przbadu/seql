@@ -1,4 +1,4 @@
-const { app, BrowserWindow, nativeImage } = require("electron");
+const { app, BrowserWindow, nativeTheme } = require("electron");
 const path = require("path");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -32,6 +32,8 @@ const createWindow = async () => {
       spellcheck: false,
     },
   });
+
+  nativeTheme.themeSource = "light";
 
   // and load the index.html of the app.
   window.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
