@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const ModalContainer = styled.div`
@@ -21,6 +22,8 @@ const ModalFooter = styled.div`
 `;
 
 const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
+  const { t } = useTranslation();
+
   return (
     <form className="form-horizontal">
       <div className={`modal ${open ? "active" : ""}`}>
@@ -34,7 +37,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
           <div className="modal-header pl-2">
             <ModalTitle className="modal-title h6">
               <h6 style={{ textTransform: "uppercase" }}>
-                Create new Connection
+                {t("message.createNewConn")}
               </h6>
 
               <a
@@ -48,7 +51,9 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
             <div className="content">
               <div className="form-group">
                 <div className="col-4 col-sm-12">
-                  <label className="form-label">Connection Name</label>
+                  <label className="form-label">
+                    {t("word.connectionName")}
+                  </label>
                 </div>
                 <div className="col-8 col-sm-12">
                   <input
@@ -61,7 +66,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
               </div>
               <div className="form-group">
                 <div className="col-4 col-sm-12">
-                  <label className="form-label">Client</label>
+                  <label className="form-label">{t("word.client")}</label>
                 </div>
                 <div className="col-8 col-sm-12">
                   <select
@@ -79,7 +84,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
               <div className="form-group">
                 <div className="col-4 col-sm-12">
                   <label htmlFor="" className="form-label">
-                    Host name/IP
+                    {t("word.hostName")}/IP
                   </label>
                 </div>
                 <div className="col-8 col-sm-12">
@@ -94,7 +99,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
 
               <div className="form-group">
                 <div className="col-4 col-sm-12">
-                  <label className="form-label">Port</label>
+                  <label className="form-label">{t("word.port")}</label>
                 </div>
                 <div className="col-8 col-sm-12">
                   <input
@@ -108,7 +113,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
 
               <div className="form-group">
                 <div className="col-4 col-sm-12">
-                  <label className="form-label">User</label>
+                  <label className="form-label">{t("word.user")}</label>
                 </div>
                 <div className="col-8 col-sm-12">
                   <input
@@ -122,7 +127,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
 
               <div className="form-group">
                 <div className="col-4 col-sm-12">
-                  <label className="form-label">Password</label>
+                  <label className="form-label">{t("word.password")}</label>
                 </div>
                 <div className="col-8 col-sm-12">
                   <input
@@ -137,8 +142,10 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
             </div>
           </div>
           <ModalFooter className="modal-footer">
-            <button className="btn btn-error">Test Connection</button>
-            <button className="btn btn-primary">Save & continue</button>
+            <button className="btn btn-error">{t("word.testConn")}</button>
+            <button className="btn btn-primary">
+              {t("word.saveAndContinue")}
+            </button>
           </ModalFooter>
         </ModalContainer>
       </div>

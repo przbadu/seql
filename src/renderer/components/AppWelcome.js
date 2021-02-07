@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ModalNewConnection from "./ModalNewConnection";
@@ -13,31 +14,29 @@ const formState = {
 };
 
 const AppWelcome = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(formState);
 
   const toggleModal = () => {
-    console.log(open);
     setOpen((prev) => !prev);
   };
 
   const handleChange = (e) => {
-    console.log(e.target);
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(form);
   return (
     <WelcomeWrapper>
       <BottomSpacing>
-        <h4>Welcome to SEQL Database Client!</h4>
+        <h4>{t("message.appWelcome")}</h4>
       </BottomSpacing>
       <BottomSpacing>
-        <p>Step 1: Create a new database connection.</p>
+        <p>{t("message.createNewDbCon")}</p>
       </BottomSpacing>
       <BottomSpacing>
         <button className="btn btn-error" onClick={toggleModal}>
-          Create connection
+          {t("word.createConn")}
         </button>
       </BottomSpacing>
 
