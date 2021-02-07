@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -17,6 +18,8 @@ const AppWelcome = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(formState);
+  const dispatch = useDispatch();
+  const connection = useSelector((state) => state.connection);
 
   const toggleModal = () => {
     setOpen((prev) => !prev);
@@ -25,6 +28,17 @@ const AppWelcome = () => {
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handleTestConnection = (e) => {
+    e.preventDefault();
+  };
+
+  const handleConnect = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
+
+  console.log(connection);
 
   return (
     <WelcomeWrapper>
@@ -42,8 +56,10 @@ const AppWelcome = () => {
 
       <ModalNewConnection
         open={open}
-        handleClose={toggleModal}
-        handleChange={handleChange}
+        onClose={toggleModal}
+        onChange={handleChange}
+        onTestConnection={handleTestConnection}
+        onConnect={handleConnect}
         form={form}
       />
     </WelcomeWrapper>

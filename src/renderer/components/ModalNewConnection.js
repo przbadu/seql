@@ -21,7 +21,14 @@ const ModalFooter = styled.div`
   align-items: center;
 `;
 
-const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
+const ModalNewConnection = ({
+  open,
+  form,
+  onClose,
+  onChange,
+  onTestConnection,
+  onConnect,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +38,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
           href="#close"
           className="modal-overlay c-hand"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={onClose}
         ></a>
         <ModalContainer className="modal-container">
           <div className="modal-header pl-2">
@@ -43,7 +50,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
               <a
                 className="btn btn-clear c-hand"
                 aria-label="Close"
-                onClick={handleClose}
+                onClick={onClose}
               ></a>
             </ModalTitle>
           </div>
@@ -60,7 +67,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     className="form-input"
                     name="name"
                     value={form.name}
-                    onChange={handleChange}
+                    onChange={onChange}
                   />
                 </div>
               </div>
@@ -74,7 +81,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     name="client"
                     className="form-input"
                     value={form.client}
-                    onChange={handleChange}
+                    onChange={onChange}
                   >
                     <option value="postgresql">PostgreSQL</option>
                   </select>
@@ -92,7 +99,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     className="form-input"
                     name="host"
                     value={form.host}
-                    onChange={handleChange}
+                    onChange={onChange}
                   />
                 </div>
               </div>
@@ -106,7 +113,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     className="form-input"
                     name="port"
                     value={form.port}
-                    onChange={handleChange}
+                    onChange={onChange}
                   />
                 </div>
               </div>
@@ -120,7 +127,7 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     className="form-input"
                     name="user"
                     value={form.user}
-                    onChange={handleChange}
+                    onChange={onChange}
                   />
                 </div>
               </div>
@@ -135,15 +142,17 @@ const ModalNewConnection = ({ open, form, handleClose, handleChange }) => {
                     className="form-input"
                     name="password"
                     value={form.password}
-                    onChange={handleChange}
+                    onChange={onChange}
                   />
                 </div>
               </div>
             </div>
           </div>
           <ModalFooter className="modal-footer">
-            <button className="btn btn-error">{t("word.testConn")}</button>
-            <button className="btn btn-primary">
+            <button onClick={onTestConnection} className="btn btn-error">
+              {t("word.testConn")}
+            </button>
+            <button className="btn btn-primary" onClick={onConnect}>
               {t("word.saveAndContinue")}
             </button>
           </ModalFooter>
