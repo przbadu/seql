@@ -23,8 +23,8 @@ let mainWindow;
 const createWindow = async () => {
   // Create the browser window.
   const window = new BrowserWindow({
-    width: 1024,
-    height: 800,
+    width: 1600,
+    height: 900,
     minHeight: 900,
     minWidth: 550,
     title: "SEQL Pro",

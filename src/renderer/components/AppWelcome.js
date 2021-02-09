@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ModalNewConnection from "./ModalNewConnection";
+import Connection from "../ipc-api/Connection";
 
 const formState = {
   name: "",
-  client: "postgresql",
+  client: "mysql",
   host: "127.0.0.1",
-  port: "5432",
+  port: "3306",
   user: "",
   password: "",
+};
+const testConnectionState = {
+  connecting: false,
+  error: false,
+  success: false,
 };
 
 const AppWelcome = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(formState);
-  const dispatch = useDispatch();
-  const connection = useSelector((state) => state.connection);
+  const [testConnectionResult, setTestConnectionResult] = useState(
+    testConnectionState
+  );
 
   const toggleModal = () => {
     setOpen((prev) => !prev);
@@ -29,8 +35,32 @@ const AppWelcome = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleTestConnection = (e) => {
+  const handleCloseToast = (e) => {
     e.preventDefault();
+    setTestConnectionResult((state) => ({ ...state, ...testConnectionState }));
+  };
+
+  const handleTestConnection = async (e) => {
+    e.preventDefault();
+    setTestConnectionResult((state) => ({ ...state, connecting: true }));
+
+    const res = await Connection.testConnection(form);
+
+    if (res.status === "error") {
+      setTestConnectionResult((state) => ({
+        ...state,
+        error: res.message,
+        success: false,
+      }));
+    } else {
+      setTestConnectionResult((state) => ({
+        ...state,
+        success: true,
+        error: false,
+      }));
+    }
+
+    setTestConnectionResult((state) => ({ ...state, connecting: false }));
   };
 
   const handleConnect = (e) => {
@@ -38,15 +68,13 @@ const AppWelcome = () => {
     console.log(form);
   };
 
-  console.log(connection);
-
   return (
     <WelcomeWrapper>
       <BottomSpacing>
         <h4>{t("message.appWelcome")}</h4>
       </BottomSpacing>
       <BottomSpacing>
-        <p>{t("message.createNewDbCon")}</p>
+        <p>{t("message.createNewDbConn")}</p>
       </BottomSpacing>
       <BottomSpacing>
         <button className="btn btn-error" onClick={toggleModal}>
@@ -58,9 +86,11 @@ const AppWelcome = () => {
         open={open}
         onClose={toggleModal}
         onChange={handleChange}
+        testConnectionResult={testConnectionResult}
         onTestConnection={handleTestConnection}
         onConnect={handleConnect}
         form={form}
+        handleCloseToast={handleCloseToast}
       />
     </WelcomeWrapper>
   );

@@ -100,6 +100,7 @@ export default {
       appWelcome: "Welcome to SEQL Database Client!",
       createNewDbConn: "Create a new database connection",
       createNewConn: "Create new connection",
+      successTestConn: "Successful Test Connection",
     },
     short: {
       year: "numeric",

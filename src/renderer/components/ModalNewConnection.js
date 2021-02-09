@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
+import BaseToast from "./BaseToast";
+import BaseLoader from "./BaseLoader";
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -26,8 +29,10 @@ const ModalNewConnection = ({
   form,
   onClose,
   onChange,
+  testConnectionResult,
   onTestConnection,
   onConnect,
+  handleCloseToast,
 }) => {
   const { t } = useTranslation();
 
@@ -83,6 +88,8 @@ const ModalNewConnection = ({
                     value={form.client}
                     onChange={onChange}
                   >
+                    <option value="mysql">MySQL</option>
+                    <option value="mariadb">MariaDB</option>
                     <option value="postgresql">PostgreSQL</option>
                   </select>
                 </div>
@@ -146,6 +153,24 @@ const ModalNewConnection = ({
                   />
                 </div>
               </div>
+
+              {testConnectionResult.connecting && <BaseLoader />}
+              {testConnectionResult.error.message && (
+                <BaseToast
+                  variant="error"
+                  message={testConnectionResult.error.message}
+                  open
+                  onClick={handleCloseToast}
+                />
+              )}
+              {testConnectionResult.success && (
+                <BaseToast
+                  variant="success"
+                  message={t("message.successTestConn")}
+                  open
+                  onClick={handleCloseToast}
+                />
+              )}
             </div>
           </div>
           <ModalFooter className="modal-footer">
