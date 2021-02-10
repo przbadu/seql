@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import ModalNewConnection from "./ModalNewConnection";
 import Connection from "../ipc-api/Connection";
+import * as actionTypes from "../store/actionType";
 
 const formState = {
   name: "",
@@ -21,14 +23,17 @@ const testConnectionState = {
 
 const AppWelcome = () => {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const appSetting = useSelector((state) => state.appSetting);
   const [form, setForm] = useState(formState);
   const [testConnectionResult, setTestConnectionResult] = useState(
     testConnectionState
   );
 
   const toggleModal = () => {
-    setOpen((prev) => !prev);
+    if (appSetting.showConnectionDialog)
+      dispatch({ type: actionTypes.HIDE_CONNECTION_DIALOG });
+    else dispatch({ type: actionTypes.SHOW_CONNECTION_DIALOG });
   };
 
   const handleChange = (e) => {
@@ -68,6 +73,8 @@ const AppWelcome = () => {
     console.log(form);
   };
 
+  console.log(appSetting);
+
   return (
     <WelcomeWrapper>
       <BottomSpacing>
@@ -83,7 +90,7 @@ const AppWelcome = () => {
       </BottomSpacing>
 
       <ModalNewConnection
-        open={open}
+        open={appSetting.showConnectionDialog}
         onClose={toggleModal}
         onChange={handleChange}
         testConnectionResult={testConnectionResult}
