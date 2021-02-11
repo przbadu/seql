@@ -7,6 +7,7 @@ import AppWelcome from "./components/AppWelcome";
 import { AppWrapper, ContentWrapper } from "./components/styles/AppTheme";
 import WorkspaceMiniSidebar from "./components/WorkspaceMiniSidebar";
 import ModalNewConnection from "./components/ModalNewConnection";
+import Workspace from "./components/Workspace";
 
 const App = () => {
   const connections = useSelector((state) => state.connections);
@@ -20,14 +21,14 @@ const App = () => {
           type: actionTypes.ACTIVE_CONNECTION,
           payload: connections[0],
         });
-  }, []);
+  }, [connections]);
 
   return (
     <AppWrapper>
       <ContentWrapper>
         <WorkspaceMiniSidebar />
 
-        {connections.length ? <p>connection present</p> : <AppWelcome />}
+        {connections.length ? <Workspace /> : <AppWelcome />}
       </ContentWrapper>
 
       <ModalNewConnection />

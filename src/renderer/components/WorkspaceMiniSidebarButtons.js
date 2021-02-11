@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import { Menu, Item, useContextMenu } from "react-contexify";
@@ -16,8 +15,6 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const dispatch = useDispatch();
   const { show } = useContextMenu({ id: connection.uid });
   const { activeConnection } = useSelector((state) => state.appSetting);
-
-  console.log(activeConnection.uid);
 
   const handleClick = (e) => {
     e.preventDefault();

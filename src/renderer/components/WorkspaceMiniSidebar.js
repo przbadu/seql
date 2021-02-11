@@ -9,16 +9,7 @@ import * as actionTypes from "../store/actionType";
 import { useTranslation } from "react-i18next";
 import WorkspaceMiniSidebarButtons from "./WorkspaceMiniSidebarButtons";
 import { IconButton } from "./styles/IconButton";
-
-export const SidebarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-right: 1px solid ${(props) => props.theme.borderColor};
-  padding: 10px;
-  height: 100vh;
-`;
+import { SidebarWrapper } from "./styles/AppTheme";
 
 const WorkspaceMiniSidebar = () => {
   const { t } = useTranslation();
@@ -33,7 +24,7 @@ const WorkspaceMiniSidebar = () => {
   };
 
   return (
-    <SidebarWrapper>
+    <SidebarWrapper className="pt-2">
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <IconButton
           className="tooltip tooltip-right text-error"
