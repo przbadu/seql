@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import clsx from "clsx";
 import { Menu, Item, useContextMenu } from "react-contexify";
 import { Icon } from "@mdi/react";
@@ -15,6 +15,7 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const dispatch = useDispatch();
   const { show } = useContextMenu({ id: connection.uid });
   const { activeConnection } = useSelector((state) => state.appSetting);
+  const connections = useSelector((state) => state.connections);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -26,7 +27,12 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
   };
 
   const handleDelete = (e) => {
+    const conns = connections.filter((c) => c.uid !== connection.uid);
     dispatch({ type: actionTypes.DELETE_CONNECTION, payload: connection.uid });
+    dispatch({
+      type: actionTypes.ACTIVE_CONNECTION,
+      payload: conns.length > 0 ? conns[0] : {},
+    });
   };
 
   const displayMenu = (e) => show(e);

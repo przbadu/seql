@@ -21,7 +21,7 @@ const App = () => {
           type: actionTypes.ACTIVE_CONNECTION,
           payload: connections[0],
         });
-  }, [connections]);
+  }, []);
 
   return (
     <AppWrapper>

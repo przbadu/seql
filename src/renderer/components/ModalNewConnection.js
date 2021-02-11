@@ -28,6 +28,7 @@ const ModalNewConnection = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const appSetting = useSelector((state) => state.appSetting);
+  const connections = useSelector((state) => state.connections);
   const [form, setForm] = useState(formState);
   const [testConnectionResult, setTestConnectionResult] = useState(
     testConnectionState
@@ -67,7 +68,12 @@ const ModalNewConnection = () => {
   const handleSaveAndContinue = (e) => {
     e.preventDefault();
     const payload = { ...form, uid: uidGen("CONN") };
-    dispatch({ type: actionTypes.ADD_CONNECTION, payload: payload });
+
+    if (connections.length === 0)
+      dispatch({ type: actionTypes.ACTIVE_CONNECTION, payload });
+
+    dispatch({ type: actionTypes.ADD_CONNECTION, payload });
+    setForm((state) => ({ ...state, formState }));
     handleCloseConnectionDialog();
   };
 
