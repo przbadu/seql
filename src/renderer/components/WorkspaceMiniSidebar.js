@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Icon } from "@mdi/react";
-import { mdiCog, mdiPlus, mdiPlusThick } from "@mdi/js";
+import { mdiCog, mdiPlus } from "@mdi/js";
 
 import * as actionTypes from "../store/actionType";
 
-import PostgresqlLogo from "./icons/PostgresqlLogo";
+import { useTranslation } from "react-i18next";
+import WorkspaceMiniSidebarButtons from "./WorkspaceMiniSidebarButtons";
 
 export const SidebarWrapper = styled.div`
   display: flex;
@@ -17,10 +18,23 @@ export const SidebarWrapper = styled.div`
   padding: 10px;
   height: 100vh;
 `;
+export const IconButton = styled.a`
+  margin-bottom: 10px;
+  padding: 10px 10px 5px 10px;
+
+  &:hover,
+  &:active,
+  & > .active {
+    border-radius: 10px;
+    background-color: #efefef;
+  }
+`;
 
 const WorkspaceMiniSidebar = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const appSetting = useSelector((state) => state.appSetting);
+  const connections = useSelector((state) => state.connections);
 
   const toggleModal = () => {
     if (appSetting.showConnectionDialog)
@@ -30,12 +44,30 @@ const WorkspaceMiniSidebar = () => {
 
   return (
     <SidebarWrapper>
-      <div>
-        <a className="text-error" onClick={toggleModal}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <IconButton
+          className="tooltip tooltip-right text-error"
+          data-tooltip={t("word.createConn")}
+          onClick={toggleModal}
+        >
           <Icon path={mdiPlus} size={1} />
-        </a>
+        </IconButton>
+
+        {connections.map((connection) => (
+          <WorkspaceMiniSidebarButtons
+            key={connection.uid}
+            connection={connection}
+          />
+        ))}
       </div>
-      <Icon path={mdiCog} size={1} />
+
+      <IconButton
+        className="tooltip tooltip-right"
+        data-tooltip={t("word.settings")}
+        onClick={() => {}}
+      >
+        <Icon path={mdiCog} size={1} />
+      </IconButton>
     </SidebarWrapper>
   );
 };

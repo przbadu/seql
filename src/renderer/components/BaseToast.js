@@ -51,13 +51,7 @@ const BaseToast = ({ variant = "error", message, open, onClick }) => {
       style={{ display: open ? "flex" : "none" }}
     >
       <Message>
-        {icon && (
-          <Icon
-            path={icon}
-            size={icon === mdiAlertRhombus ? 4 : 1}
-            className="mr-1"
-          />
-        )}
+        {icon && <Icon path={icon} size={1} className="mr-1" />}
         {message}
       </Message>
       <button className="btn btn-clear float-right" onClick={onClick}></button>

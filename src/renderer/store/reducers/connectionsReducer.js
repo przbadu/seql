@@ -10,8 +10,9 @@ const persistentStore = new Store({
   encryptionKey: key,
 });
 
-const storeName = "connection";
-const initialState = persistentStore.get("connections") || [];
+const storeName = "connections";
+
+const initialState = persistentStore.get(storeName) || [];
 
 export default (state = initialState, action = {}) => {
   let connections;

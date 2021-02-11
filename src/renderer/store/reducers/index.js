@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import connection from "./connectionReducer";
+import connections from "./connectionsReducer";
 import appSetting from "./appSettingReducer";
 
 export default combineReducers({
-  connection,
+  connections,
   appSetting,
 });

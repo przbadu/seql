@@ -1,7 +1,6 @@
 import fs from "fs";
 import { ipcMain } from "electron";
 import { ClientsFactory } from "../lib/ClientsFactory";
-import mysql from "mysql";
 
 export default () => {
   ipcMain.handle("test-connection", async (event, conn) => {

@@ -6,15 +6,17 @@ import styled from "styled-components";
 import ModalNewConnection from "./ModalNewConnection";
 import Connection from "../ipc-api/Connection";
 import * as actionTypes from "../store/actionType";
+import { uidGen } from "../../common/lib/uidGen";
 
 const formState = {
   name: "",
   client: "mysql",
   host: "127.0.0.1",
   port: "3306",
-  user: "",
+  user: "root",
   password: "",
 };
+
 const testConnectionState = {
   connecting: false,
   error: false,
@@ -68,12 +70,12 @@ const AppWelcome = () => {
     setTestConnectionResult((state) => ({ ...state, connecting: false }));
   };
 
-  const handleConnect = (e) => {
+  const handleSaveAndContinue = (e) => {
     e.preventDefault();
-    console.log(form);
+    const payload = { ...form, uid: uidGen("CONN") };
+    dispatch({ type: actionTypes.ADD_CONNECTION, payload: payload });
+    toggleModal();
   };
-
-  console.log(appSetting);
 
   return (
     <WelcomeWrapper>
@@ -95,7 +97,7 @@ const AppWelcome = () => {
         onChange={handleChange}
         testConnectionResult={testConnectionResult}
         onTestConnection={handleTestConnection}
-        onConnect={handleConnect}
+        onConnect={handleSaveAndContinue}
         form={form}
         handleCloseToast={handleCloseToast}
       />
