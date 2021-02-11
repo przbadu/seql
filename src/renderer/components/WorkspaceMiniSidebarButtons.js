@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import clsx from "clsx";
 import { Menu, Item, useContextMenu } from "react-contexify";
 import { Icon } from "@mdi/react";
 import { mdiTrashCan, mdiPencil } from "@mdi/js";
@@ -15,20 +17,26 @@ export const IconButton = styled.a`
   padding: 10px 10px 5px 10px;
 
   &:hover,
-  &:active,
-  & > .active {
-    border-radius: 10px;
-    background-color: #efefef;
+  &:active {
+    border-radius: 5px;
+    background-color: #f0f0f0;
+  }
+  &.active {
+    border-radius: 5px;
+    background-color: #5755d957;
   }
 `;
 
 const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const dispatch = useDispatch();
   const { show } = useContextMenu({ id: connection.uid });
+  const { activeConnection } = useSelector((state) => state.appSetting);
+
+  console.log(activeConnection.uid);
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log("click");
+    dispatch({ type: actionTypes.ACTIVE_CONNECTION, payload: connection });
   };
 
   const handleEdit = (e) => {
@@ -44,7 +52,10 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
   return (
     <>
       <IconButton
-        className={connection.name && `dropdown tooltip tooltip-right`}
+        className={clsx(
+          connection.name && "tooltip tooltip-right",
+          activeConnection.uid === connection.uid && "active"
+        )}
         data-tooltip={connection.client}
         key={connection.uid}
         onClick={handleClick}

@@ -1,7 +1,8 @@
 import { hot } from "react-hot-loader";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
+import * as actionTypes from "./store/actionType";
 import AppWelcome from "./components/AppWelcome";
 import { AppWrapper, ContentWrapper } from "./App.theme";
 import WorkspaceMiniSidebar from "./components/WorkspaceMiniSidebar";
@@ -9,6 +10,17 @@ import ModalNewConnection from "./components/ModalNewConnection";
 
 const App = () => {
   const connections = useSelector((state) => state.connections);
+  const dispatch = useDispatch();
+  const { activeConnection } = useSelector((state) => state.appSetting);
+
+  useEffect(() => {
+    if (connections.length)
+      if (Object.entries(activeConnection).length === 0)
+        dispatch({
+          type: actionTypes.ACTIVE_CONNECTION,
+          payload: connections[0],
+        });
+  }, []);
 
   return (
     <AppWrapper>

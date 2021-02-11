@@ -1,9 +1,10 @@
 export const LOADING = "LOADING";
 export const ERROR = "ERROR";
 
-// Connection Dialog
+// app setting
 export const SHOW_CONNECTION_DIALOG = "SHOW_CONNECTION_DIALOG";
 export const HIDE_CONNECTION_DIALOG = "HIDE_CONNECTION_DIALOG";
+export const ACTIVE_CONNECTION = "ACTIVE_CONNECTION";
 
 // Connections
 export const ADD_CONNECTION = "ADD_CONNECTION";
