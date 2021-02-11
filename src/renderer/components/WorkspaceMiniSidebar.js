@@ -8,6 +8,7 @@ import * as actionTypes from "../store/actionType";
 
 import { useTranslation } from "react-i18next";
 import WorkspaceMiniSidebarButtons from "./WorkspaceMiniSidebarButtons";
+import { IconButton } from "./styles/IconButton";
 
 export const SidebarWrapper = styled.div`
   display: flex;
@@ -17,17 +18,6 @@ export const SidebarWrapper = styled.div`
   border-right: 1px solid ${(props) => props.theme.borderColor};
   padding: 10px;
   height: 100vh;
-`;
-export const IconButton = styled.a`
-  margin-bottom: 10px;
-  padding: 10px 10px 5px 10px;
-
-  &:hover,
-  &:active,
-  & > .active {
-    border-radius: 10px;
-    background-color: #efefef;
-  }
 `;
 
 const WorkspaceMiniSidebar = () => {

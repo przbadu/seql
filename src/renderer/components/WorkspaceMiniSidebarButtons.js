@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import { Menu, Item, useContextMenu } from "react-contexify";
 import { Icon } from "@mdi/react";
@@ -10,22 +10,7 @@ import "react-contexify/dist/ReactContexify.css";
 import PostgresqlLogo from "./icons/PostgresqlLogo";
 import MysqlLogo from "./icons/MysqlLogo";
 import * as actionTypes from "../store/actionType";
-import { useDispatch } from "react-redux";
-
-export const IconButton = styled.a`
-  margin-bottom: 10px;
-  padding: 10px 10px 5px 10px;
-
-  &:hover,
-  &:active {
-    border-radius: 5px;
-    background-color: #f0f0f0;
-  }
-  &.active {
-    border-radius: 5px;
-    background-color: #5755d957;
-  }
-`;
+import { IconButton } from "./styles/IconButton";
 
 const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const dispatch = useDispatch();
