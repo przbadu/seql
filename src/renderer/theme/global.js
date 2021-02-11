@@ -17,6 +17,10 @@ export const GlobalStyles = createGlobalStyle`
     transition: all 0.25s linear;
   }
 
+  .form-horizontal {
+    padding: 0;
+  }
+
   /* Table */
   .column-key {
     -webkit-transform: rotate(45deg);

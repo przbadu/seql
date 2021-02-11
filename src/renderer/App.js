@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import * as actionTypes from "./store/actionType";
 import AppWelcome from "./components/AppWelcome";
-import { AppWrapper, ContentWrapper } from "./App.theme";
+import { AppWrapper, ContentWrapper } from "./components/styles/AppTheme";
 import WorkspaceMiniSidebar from "./components/WorkspaceMiniSidebar";
 import ModalNewConnection from "./components/ModalNewConnection";
 
