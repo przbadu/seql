@@ -1,49 +1,91 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import BaseToast from "./BaseToast";
 import BaseLoader from "./BaseLoader";
+import * as actionTypes from "../store/actionType";
+import Connection from "../ipc-api/Connection";
+import { uidGen } from "../../common/lib/uidGen";
 
-const ModalContainer = styled.div`
-  position: absolute;
-  max-width: 550px;
-  top: 17.5vh;
-`;
+const formState = {
+  name: "",
+  client: "mysql",
+  host: "127.0.0.1",
+  port: "3306",
+  user: "root",
+  password: "",
+};
 
-const ModalTitle = styled.div`
-  text-transform: uppercase;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+const testConnectionState = {
+  connecting: false,
+  error: false,
+  success: false,
+};
 
-const ModalFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ModalNewConnection = ({
-  open,
-  form,
-  onClose,
-  onChange,
-  testConnectionResult,
-  onTestConnection,
-  onConnect,
-  handleCloseToast,
-}) => {
+const ModalNewConnection = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const appSetting = useSelector((state) => state.appSetting);
+  const [form, setForm] = useState(formState);
+  const [testConnectionResult, setTestConnectionResult] = useState(
+    testConnectionState
+  );
+
+  const handleCloseConnectionDialog = (e) => {
+    dispatch({ type: actionTypes.HIDE_CONNECTION_DIALOG });
+  };
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleTestConnection = async (e) => {
+    e.preventDefault();
+    setTestConnectionResult((state) => ({ ...state, connecting: true }));
+
+    const res = await Connection.testConnection(form);
+
+    if (res.status === "error") {
+      setTestConnectionResult((state) => ({
+        ...state,
+        error: res.message,
+        success: false,
+      }));
+    } else {
+      setTestConnectionResult((state) => ({
+        ...state,
+        success: true,
+        error: false,
+      }));
+    }
+
+    setTestConnectionResult((state) => ({ ...state, connecting: false }));
+  };
+
+  const handleSaveAndContinue = (e) => {
+    e.preventDefault();
+    const payload = { ...form, uid: uidGen("CONN") };
+    dispatch({ type: actionTypes.ADD_CONNECTION, payload: payload });
+    handleCloseConnectionDialog();
+  };
+
+  const handleCloseToast = (e) => {
+    e.preventDefault();
+    setTestConnectionResult((state) => ({ ...state, ...testConnectionState }));
+  };
 
   return (
     <form className="form-horizontal">
-      <div className={`modal ${open ? "active" : ""}`}>
+      <div
+        className={`modal ${appSetting.showConnectionDialog ? "active" : ""}`}
+      >
         <a
           href="#close"
           className="modal-overlay c-hand"
           aria-label="Close"
-          onClick={onClose}
+          onClick={handleCloseConnectionDialog}
         ></a>
         <ModalContainer className="modal-container">
           <div className="modal-header pl-2">
@@ -55,7 +97,7 @@ const ModalNewConnection = ({
               <a
                 className="btn btn-clear c-hand"
                 aria-label="Close"
-                onClick={onClose}
+                onClick={handleCloseConnectionDialog}
               ></a>
             </ModalTitle>
           </div>
@@ -72,7 +114,7 @@ const ModalNewConnection = ({
                     className="form-input"
                     name="name"
                     value={form.name}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -86,7 +128,7 @@ const ModalNewConnection = ({
                     name="client"
                     className="form-input"
                     value={form.client}
-                    onChange={onChange}
+                    onChange={handleChange}
                   >
                     <option value="mysql">MySQL</option>
                     <option value="mariadb">MariaDB</option>
@@ -106,7 +148,7 @@ const ModalNewConnection = ({
                     className="form-input"
                     name="host"
                     value={form.host}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -120,7 +162,7 @@ const ModalNewConnection = ({
                     className="form-input"
                     name="port"
                     value={form.port}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -134,7 +176,7 @@ const ModalNewConnection = ({
                     className="form-input"
                     name="user"
                     value={form.user}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -149,7 +191,7 @@ const ModalNewConnection = ({
                     className="form-input"
                     name="password"
                     value={form.password}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -174,10 +216,10 @@ const ModalNewConnection = ({
             </div>
           </div>
           <ModalFooter className="modal-footer">
-            <button onClick={onTestConnection} className="btn btn-error">
+            <button onClick={handleTestConnection} className="btn btn-error">
               {t("word.testConn")}
             </button>
-            <button className="btn btn-primary" onClick={onConnect}>
+            <button className="btn btn-primary" onClick={handleSaveAndContinue}>
               {t("word.saveAndContinue")}
             </button>
           </ModalFooter>
@@ -188,3 +230,22 @@ const ModalNewConnection = ({
 };
 
 export default ModalNewConnection;
+
+const ModalContainer = styled.div`
+  position: absolute;
+  max-width: 550px;
+  top: 17.5vh;
+`;
+
+const ModalTitle = styled.div`
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
