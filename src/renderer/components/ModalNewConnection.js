@@ -73,7 +73,7 @@ const ModalNewConnection = () => {
       dispatch({ type: actionTypes.ACTIVE_CONNECTION, payload });
 
     dispatch({ type: actionTypes.ADD_CONNECTION, payload });
-    setForm((state) => ({ ...state, formState }));
+    setForm((state) => ({ ...state, ...formState }));
     handleCloseConnectionDialog();
   };
 

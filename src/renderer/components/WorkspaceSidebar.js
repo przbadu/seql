@@ -12,6 +12,7 @@ import WorkspaceSidebarDatabase from "./WorkspaceSidebarDatabase";
 
 const WorkspaceSidebar = () => {
   const { activeConnection } = useSelector((state) => state.appSetting);
+  const workspace = useSelector((state) => state.workspace);
 
   return (
     <SidebarWrapper className="databases">
@@ -30,9 +31,11 @@ const WorkspaceSidebar = () => {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <WorkspaceSidebarDatabase />
-        <WorkspaceSidebarDatabase />
-        <WorkspaceSidebarDatabase />
+        {workspace.databases &&
+          workspace.databases.result &&
+          workspace.databases.result.map((db) => (
+            <WorkspaceSidebarDatabase key={db.Database} database={db} />
+          ))}
       </SidebarContent>
     </SidebarWrapper>
   );

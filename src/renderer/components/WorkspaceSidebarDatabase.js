@@ -2,13 +2,13 @@ import React from "react";
 import { Icon } from "@mdi/react";
 import { mdiChevronRight, mdiDatabase } from "@mdi/js";
 
-const WorkspaceSidebarDatabase = () => {
+const WorkspaceSidebarDatabase = ({ database }) => {
   return (
     <details className="accordion">
       <summary className="accordion-header">
         <Icon path={mdiChevronRight} className="icon mr-2" />
         <Icon path={mdiDatabase} className="icon" />
-        information_schema
+        {database.Database}
       </summary>
       <div className="accordion-body">
         <ul className="menu menu-nav">

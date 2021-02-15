@@ -25,6 +25,22 @@ export class MySQLClient {
       });
   }
 
+  async getStructure() {
+    const databases = await this.raw("SHOW DATABASES");
+    const functions = await this.raw("SHOW FUNCTION STATUS");
+    const procedures = await this.raw("SHOW PROCEDURE STATUS");
+    const schemas = await this.raw(
+      "SELECT *, EVENT_SCHEMA AS `Db`, EVENT_NAME AS `Name` FROM information_schema.`EVENTS`"
+    );
+
+    return {
+      databases,
+      functions,
+      procedures,
+      schemas,
+    };
+  }
+
   /**
    * Disconnect mysql database connection
    * @memberOf MySQLClient
@@ -34,11 +50,11 @@ export class MySQLClient {
   }
 
   async raw(sql) {
-    await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
-        this._connection.query(sql, (error, result, _) => {
+        return this._connection.query(sql, (error, result, rows) => {
           if (error) reject(error);
-          resolve(result);
+          return resolve({ result, rows });
         });
       } catch (e) {
         reject(e);

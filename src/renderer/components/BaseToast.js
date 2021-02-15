@@ -20,7 +20,7 @@ const Message = styled.div`
   justify-content: center;
 `;
 
-const BaseToast = ({ variant = "error", message, open, onClick }) => {
+const BaseToast = ({ variant = "error", message, open = true, onClick }) => {
   const [icon, setIcon] = useState();
   const [className, setClassName] = useState("toast-primary");
 

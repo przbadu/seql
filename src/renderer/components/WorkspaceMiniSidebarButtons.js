@@ -10,6 +10,7 @@ import PostgresqlLogo from "./icons/PostgresqlLogo";
 import MysqlLogo from "./icons/MysqlLogo";
 import * as actionTypes from "../store/actionType";
 import { IconButton } from "./styles/IconButton";
+import { connectAndGetStructure } from "../store/actions/workspaceAction";
 
 const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
   const handleClick = (e) => {
     e.preventDefault();
     dispatch({ type: actionTypes.ACTIVE_CONNECTION, payload: connection });
+    dispatch(connectAndGetStructure(connection));
   };
 
   const handleEdit = (e) => {
@@ -33,6 +35,7 @@ const WorkspaceMiniSidebarButtons = ({ connection }) => {
       type: actionTypes.ACTIVE_CONNECTION,
       payload: conns.length > 0 ? conns[0] : {},
     });
+    dispatch(connectAndGetStructure(connection));
   };
 
   const displayMenu = (e) => show(e);
